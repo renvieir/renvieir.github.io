@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>chat</title>
+    </head>
+    <body>
+        <h1>Chating online</h1>
+
+    <!-- Place this code snippet anywhere you want the button to appear in your page. If no button has been configured in the chat script, it will not show up nor take any space. -->
+    <div id="__8x8-chat-button-container-script_5992438705b51d85c3ad2c6.48005087"></div>
+    <!-- This script will not interfere with the button layout, you just need to include it in the same page. It must also be within the <body> section of the page, preferably just before the ending tag. -->
+    <script type="text/javascript">
+        window.__8x8Chat = {
+            uuid: "script_5992438705b51d85c3ad2c6.48005087",
+            tenant: "ZGV2MTBwYWNoZWNv",
+            channel: "chatchan",
+            domain: "https://vcc-dev10b.8x8.com",
+            path: "/",
+            // domain: "https://dev.dev10webcent1.dev.whitepj.net",
+            // path: "/rvieira/970w",
+            buttonContainerId: "__8x8-chat-button-container-script_5992438705b51d85c3ad2c6.48005087",
+            align: "right",
+            onInit: function(bus) {
+                bus.publish("customer:set-info", {
+                    "First Name": "Rajendra",
+                    "Last name":  "Upadhyay",
+                    "Address": "Address from chat api",
+                    "Age":        26,
+                    "Premium":    true
+                });
+
+                bus.publish("chat:trigger-pre-chat", {
+                    wait: true
+                });
+
+                bus.publish("customer:set-info", {
+                    "First Name": null
+                });
+
+                // console.log('onInit publish customer:set-info');
+                bus.subscribe("subscribe received customer:info-sent", function(data) {
+                    console.log("customer:info-sent", data);
+                });
+
+                bus.publish("other-topic", {
+                    message: "Hello world!"
+                });
+            }
+        };
+
+        (function() {
+            var se = document.createElement("script");
+            se.type = "text/javascript";
+            se.async = true;
+            se.src = window.__8x8Chat.domain + window.__8x8Chat.path + "/CHAT/common/js/chat.js";
+
+            var os = document.getElementsByTagName("script")[0];
+            os.parentNode.insertBefore(se, os);
+        })();
+    </script>
+    </body>
+</html>
